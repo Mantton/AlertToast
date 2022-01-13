@@ -348,7 +348,7 @@ public struct AlertToast: View{
                     .aspectRatio(contentMode: .fit)
                     .scaledToFit()
                     .foregroundColor(color)
-                    .padding(.bottom)
+                    .padding(.all)
                 Spacer()
             case .image(let name, let color):
                 Spacer()
@@ -371,6 +371,7 @@ public struct AlertToast: View{
                         .font(style?.titleFont ?? Font.body.bold())
                         .multilineTextAlignment(.center)
                         .textColor(style?.titleColor ?? nil)
+                        .padding(.horizontal)
                 }
                 if subTitle != nil{
                     Text(LocalizedStringKey(subTitle ?? ""))
