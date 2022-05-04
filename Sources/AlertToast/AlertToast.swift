@@ -455,7 +455,9 @@ public struct AlertToastModifier: ViewModifier{
                         onTap?()
                         if tapToDismiss{
                             withAnimation(Animation.spring()){
+                                self.workItem?.cancel()
                                 isPresenting = false
+                                self.workItem = nil
                             }
                         }
                     }
@@ -483,7 +485,9 @@ public struct AlertToastModifier: ViewModifier{
                         onTap?()
                         if tapToDismiss{
                             withAnimation(Animation.spring()){
+                                self.workItem?.cancel()
                                 isPresenting = false
+                                self.workItem = nil
                             }
                         }
                     }
@@ -497,7 +501,9 @@ public struct AlertToastModifier: ViewModifier{
                         onTap?()
                         if tapToDismiss{
                             withAnimation(Animation.spring()){
+                                self.workItem?.cancel()
                                 isPresenting = false
+                                self.workItem = nil
                             }
                         }
                     }
@@ -583,6 +589,7 @@ public struct AlertToastModifier: ViewModifier{
             let task = DispatchWorkItem {
                 withAnimation(Animation.spring()){
                     isPresenting = false
+                    workItem = nil
                 }
             }
             workItem = task
