@@ -304,6 +304,7 @@ public struct AlertToast: View{
                                 .font(style?.titleFont ?? Font.body.bold())
                                 .multilineTextAlignment(.center)
                                 .textColor(style?.titleColor ?? nil)
+                            
                         }
                         if subTitle != nil{
                             Text(LocalizedStringKey(subTitle ?? ""))
@@ -382,7 +383,7 @@ public struct AlertToast: View{
                 }
             }
         }
-        .fixedSize(horizontal: true, vertical: false)
+//        .fixedSize(horizontal: true, vertical: false)
         .padding()
         .withFrame(type != .regular && type != .loading)
         .alertBackground(style?.backgroundColor ?? nil)
@@ -548,11 +549,11 @@ public struct AlertToastModifier: ViewModifier{
                     }
                         .overlay(ZStack{
                             main()
-                                .offset(y: offsetY)
+                                .offset(y: UIApplication.shared.windows.first?.safeAreaInsets.top ?? offsetY)
                         }
                                     .frame(maxWidth: screen.width, maxHeight: screen.height)
                                     .offset(y: offset)
-                                    .animation(Animation.spring(), value: isPresenting))
+                                    .animation(.default, value: isPresenting))
                 )
                 .valueChanged(value: isPresenting, onChange: { (presented) in
                     if presented{
@@ -578,14 +579,13 @@ public struct AlertToastModifier: ViewModifier{
     }
     
     private func onAppearAction(){
-        if alert().type == .loading{
+        if alert().type == .loading {
             duration = 0
             tapToDismiss = false
-        }
-        
-        if duration > 0{
+            return
+        } else {
+            duration = 1.5
             workItem?.cancel()
-            
             let task = DispatchWorkItem {
                 withAnimation(Animation.spring()){
                     isPresenting = false
